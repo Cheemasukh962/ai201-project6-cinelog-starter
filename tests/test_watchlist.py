@@ -120,3 +120,58 @@ def test_add_to_watchlist_defaults_to_private(app, sample_user, sample_film):
     with app.app_context():
         entry = add_to_watchlist(user_id=sample_user, film_id=sample_film)
         assert entry.public is False
+
+
+# ── Sort order (Comment 5) ───────────────────────────────────────────────────
+
+def test_get_watchlist_returns_newest_first_by_default(app, sample_user):
+    """
+    get_watchlist() defaults to date_added descending, matching get_collection().
+    """
+    with app.app_context():
+        from datetime import datetime, timezone, timedelta
+
+        film_a = Film(title="Alien", year=1979, genre="Horror")
+        film_b = Film(title="Blade Runner", year=1982, genre="Sci-Fi")
+        db.session.add_all([film_a, film_b])
+        db.session.commit()
+
+        earlier = datetime.now(timezone.utc) - timedelta(days=5)
+        later = datetime.now(timezone.utc)
+
+        # Blade Runner sorts second alphabetically but was added later, so a
+        # date_added sort must put it first. This ordering deliberately differs
+        # from the alphabetical one, so the test fails if the sort regresses.
+        db.session.add_all([
+            WatchlistEntry(user_id=sample_user, film_id=film_a.id, date_added=earlier),
+            WatchlistEntry(user_id=sample_user, film_id=film_b.id, date_added=later),
+        ])
+        db.session.commit()
+
+        titles = [f["title"] for f in get_watchlist(sample_user)]
+        assert titles == ["Blade Runner", "Alien"]
+
+
+def test_get_watchlist_supports_title_sort(app, sample_user):
+    """
+    Passing sort="title" returns the watchlist A–Z regardless of date added.
+    """
+    with app.app_context():
+        from datetime import datetime, timezone, timedelta
+
+        film_a = Film(title="Alien", year=1979, genre="Horror")
+        film_b = Film(title="Blade Runner", year=1982, genre="Sci-Fi")
+        db.session.add_all([film_a, film_b])
+        db.session.commit()
+
+        earlier = datetime.now(timezone.utc) - timedelta(days=5)
+        later = datetime.now(timezone.utc)
+
+        db.session.add_all([
+            WatchlistEntry(user_id=sample_user, film_id=film_a.id, date_added=earlier),
+            WatchlistEntry(user_id=sample_user, film_id=film_b.id, date_added=later),
+        ])
+        db.session.commit()
+
+        titles = [f["title"] for f in get_watchlist(sample_user, sort="title")]
+        assert titles == ["Alien", "Blade Runner"]
