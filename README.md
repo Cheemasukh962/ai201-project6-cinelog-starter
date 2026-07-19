@@ -1,3 +1,6 @@
+
+<img width="569" height="261" alt="image" src="https://github.com/user-attachments/assets/627b0520-3c46-41d0-9830-de1310b453ca" />
+
 # CineLog
 
 A community film tracking app. Users log films they've watched, rate them, and build collections.
