@@ -294,8 +294,8 @@ of the six requested changes.
 
 
 ```
+<img width="716" height="262" alt="image" src="https://github.com/user-attachments/assets/16ad7e10-d9d8-4a86-b751-268ada0615bd" />
 
-<img width="1137" height="522" alt="image" src="https://github.com/user-attachments/assets/f88ca6aa-7ff0-4c46-91c0-7011bd803c08" />
 
 Cleanup done during `git rebase -i origin/main`:
 
