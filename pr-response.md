@@ -292,23 +292,10 @@ of the six requested changes.
 
 ## Git History
 
-```
-892bd32 docs: document design decisions and rebase in pr-response
-dce6549 fix: update watchlist film_id references to UUID after main refactor
-f44b417 feat: sort watchlist newest-first with opt-in title sort
-1b4217e feat: default watchlist entries to private
-7499ff9 test: add duplicate entry test for add_to_watchlist
-c315cab fix: map watchlist errors to 404 and 409 responses
-0bcc207 fix: add deduplication check to prevent duplicate watchlist entries
-f0a4cb1 docs: add pr-response.md documenting review responses
-d26980e test: add tests for add_to_watchlist happy path and nonexistent film
-803589a fix: add Film to WatchlistEntry relationship so get_watchlist can load films
-e2391b7 fix: rename save_to_watchlist to add_to_watchlist per naming convention
-a9c740f fix: update film retrieval method to use db.session.get in collection and watchlist services
-e2fb782 feat: add watchlist model and add_to_watchlist endpoint
+
 ```
 
-<!-- TODO: replace the block above with the screenshot of `git log --oneline`. -->
+<img width="1137" height="522" alt="image" src="https://github.com/user-attachments/assets/f88ca6aa-7ff0-4c46-91c0-7011bd803c08" />
 
 Cleanup done during `git rebase -i origin/main`:
 
